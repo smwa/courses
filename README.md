@@ -8,3 +8,5 @@ The application lets users define college courses, with prerequisite courses, an
 ##Installation
 Use gradle to install the packages and build the project.
 There's a fatjar gradle build step that produces a single .jar for use in the docker container.
+
+*Built under the MIT license*
