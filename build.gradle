@@ -1,0 +1,41 @@
+apply plugin: 'maven'
+apply plugin: 'java'
+apply plugin: 'application'
+
+version = '1.0'
+
+repositories {
+   mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'me.smwa.courses.Main'
+    }
+}
+
+sourceSets {
+	main { 
+		output.resourcesDir = 'build/classes/main'
+	}
+}
+
+dependencies {
+	compile "com.sparkjava:spark-core:2.5.5"
+	compile 'org.xerial:sqlite-jdbc:3.16.1'
+	compile 'org.slf4j:slf4j-nop:1.7.21'
+    compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
+    compile group: 'org.apache.poi', name: 'poi', version: '3.16'
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.16'
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Courses Program',
+                'Implementation-Version': version,
+                'Main-Class': 'me.smwa.courses.Main'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
